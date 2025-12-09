@@ -1,5 +1,6 @@
 const SUPABASE_URL = "https://hpmvfhsulwydddvmplbp.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwbXZmaHN1bHd5ZGRkdm1wbGJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUyOTMyMDgsImV4cCI6MjA4MDg2OTIwOH0.wtcI5MZ-cXNSj_msrezc4LjkTI8deMoNrAursOfshiE";
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwbXZmaHN1bHd5ZGRkdm1wbGJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUyOTMyMDgsImV4cCI6MjA4MDg2OTIwOH0.wtcI5MZ-cXNSj_msrezc4LjkTI8deMoNrAursOfshiE";
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -9,9 +10,8 @@ async function loadData() {
 
   statusEl.textContent = "Ielādē datus no Supabase...";
 
-  // ŠEIT: nomaini "tabula" un "created_at" uz savu tabulu/kolonnu, ja vajag
   const { data, error } = await supabaseClient
-    .from("tabula")
+    .from("tabula") // Tavas tabulas nosaukums
     .select("*")
     .order("created_at", { ascending: true });
 
@@ -31,12 +31,13 @@ async function loadData() {
 
   data.forEach((row) => {
     const li = document.createElement("li");
-    // ŠEIT: nomaini row.name / row.created_at, ja tev ir citi lauku nosaukumi
     li.textContent = `${row.name} – ${row.created_at}`;
     listEl.appendChild(li);
   });
 }
 
 document.addEventListener("DOMContentLoaded", loadData);
+
+
 
 
