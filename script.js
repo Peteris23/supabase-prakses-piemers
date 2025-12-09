@@ -9,11 +9,11 @@ async function loadData() {
 
   statusEl.textContent = "Ielādē datus no Supabase...";
 
-  // Ja tabulas nosaukums nav "members", nomaini uz savu, piemēram "tasks"
+  // ŠEIT: nomaini "tabula" un "created_at" uz savu tabulu/kolonnu, ja vajag
   const { data, error } = await supabaseClient
-    .from("members")
+    .from("tabula")
     .select("*")
-    .order("id", { ascending: true });
+    .order("created_at", { ascending: true });
 
   if (error) {
     console.error(error);
@@ -31,10 +31,12 @@ async function loadData() {
 
   data.forEach((row) => {
     const li = document.createElement("li");
-    // Ja lauku nosaukumi ir citi, nomaini row.name / row.description
-    li.textContent = `${row.id}: ${row.name} – ${row.description}`;
+    // ŠEIT: nomaini row.name / row.created_at, ja tev ir citi lauku nosaukumi
+    li.textContent = `${row.name} – ${row.created_at}`;
     listEl.appendChild(li);
   });
 }
 
 document.addEventListener("DOMContentLoaded", loadData);
+
+
